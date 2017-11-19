@@ -10,20 +10,12 @@
     <description>
         为了方便以后的一些问题的讲解特地准备一个最精简的 SpringMVC+Spring+Mybatis 框架整合，方便以后的一些问题的演示
     </description>
-    <url>http://code.YouMeek.com</url>
 
     <!-- 集中定义公用的依赖版本号 -->
     <!--版本变量设置 start-->
     <properties>
         <!--架包版本变量 start-->
 
-        <!--2016-02-20注释掉代码，切换到spring3试试-->
-        <!--mybatis官网看到,如果要使用spring4的话,要用：mybatis-2-spring这个架包,http://blog.mybatis.org/2015/11/spring-4-got-you-down-with-no-ibatis.html-->
-        <!--<spring.version>4.0.2.RELEASE</spring.version>-->
-        <!--<mybatis.version>3.2.6</mybatis.version>-->
-        <!--<mybatis-spring.version>1.2.2</mybatis-spring.version>-->
-
-        <!--2016-02-20切换到spring3试试-->
         <!--mybatis官网：http://blog.mybatis.org/2016/02/mybatis-331-and-mybatis-spring-124.html,在2016-02-13发布了3.3.1版本-->
         <spring.version>3.2.16.RELEASE</spring.version>
         <mybatis.version>3.3.1</mybatis.version>
@@ -61,7 +53,6 @@
         <!--插件版本变量 start-->
         <tomcat6-maven-plugin.version>2.1</tomcat6-maven-plugin.version>
         <tomcat7-maven-plugin.version>2.2</tomcat7-maven-plugin.version>
-        <jetty-plugin.version>8.1.16.v20140903</jetty-plugin.version>
 
         <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
         <maven-war-plugin.version>2.3</maven-war-plugin.version>
@@ -80,8 +71,6 @@
         <tomcat-port.version>8080</tomcat-port.version>
         <tomcat-uri-encoding.version>UTF-8</tomcat-uri-encoding.version>
         <tomcat-path.version>/</tomcat-path.version>
-        <jetty-port.version>8080</jetty-port.version>
-        <jetty-path.version>/</jetty-path.version>
         <!--其他变量 end-->
 
         <!--这个配置是为了解决下面两个警告-->
@@ -102,8 +91,6 @@
 
         <!-- ############################################################### Spring 相关包 start ############################################################### -->
         <!--spring 源码包下载地址：https://github.com/spring-projects/spring-framework/releases-->
-        <!--http://takeme.iteye.com/blog/1977585-->
-        <!--http://blog.csdn.net/bluishglc/article/details/6585221-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
@@ -268,28 +255,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- 日志文件管理包 start -->
-        <!--下面这三个是配套使用：http://blog.csdn.net/woshiwxw765/article/details/7624556-->
-        <!--使用log4j start-->
-        <!--<dependency>-->
-            <!--<groupId>log4j</groupId>-->
-            <!--<artifactId>log4j</artifactId>-->
-            <!--<version>${log4j.version}</version>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-            <!--<groupId>org.slf4j</groupId>-->
-            <!--<artifactId>slf4j-api</artifactId>-->
-            <!--<version>${slf4j.version}</version>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-            <!--<groupId>org.slf4j</groupId>-->
-            <!--<artifactId>slf4j-log4j12</artifactId>-->
-            <!--<version>${slf4j.version}</version>-->
-        <!--</dependency>-->
-        <!--使用log4j end-->
-
         <!--使用logback start-->
         <!--导入这个的时候会自动导入：slf4j-api、logback-core，所以我们还需要导入：log4j和logback-ext-spring-->
         <dependency>
@@ -420,31 +385,6 @@
                 </configuration>
             </plugin>
 
-            <!--jetty插件-->
-            <!--http://www.eclipse.org/jetty/documentation/9.0.0.M3/jetty-maven-plugin.html-->
-            <plugin>
-                <groupId>org.mortbay.jetty</groupId>
-                <artifactId>jetty-maven-plugin</artifactId>
-                <version>${jetty-plugin.version}</version>
-                <configuration>
-                    <stopKey>foo</stopKey>
-                    <stopPort>9999</stopPort>
-                    <connectors>
-                        <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
-                            <port>${jetty-port.version}</port>
-                        </connector>
-                    </connectors>
-                    <webApp>
-                        <!--访问地址：http://localhost:8080/index.jsp-->
-                        <!--如果不带index.jsp会直接报404，这个一直没找到原因-->
-                        <contextPath>${jetty-path.version}</contextPath>
-                    </webApp>
-                    <!--scanIntervalSeconds 可选[秒]。在很短的时间间隔内在扫描web应用检查是否有改变，如果发觉有任何改变则自动热部署。默认为0，表示禁用热部署检查。任何一个大于0的数字都将表示启用。-->
-                    <scanIntervalSeconds>10</scanIntervalSeconds>
-                </configuration>
-            </plugin>
-
-
             <!-- resource插件 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -473,14 +413,7 @@
                 <version>${maven-clean-plugin.version}</version>
             </plugin>
 
-            <!-- ant插件 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <version>${maven-antrun-plugin.version}</version>
-            </plugin>
-
-            <!-- dependency插件 -->
+            <!-- dependency插件-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
